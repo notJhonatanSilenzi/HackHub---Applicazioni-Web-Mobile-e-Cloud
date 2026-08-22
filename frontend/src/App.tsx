@@ -5,18 +5,8 @@
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import AuthView from "./views/AuthView.tsx";
+import HomeView from './views/HomeView';
 import './index.css'
-
-// Componente temporaneo per la Home
-function HomeView() {
-    return (
-        <div className="container">
-            <h1 className={"title"}>Benvenuto su HackHub</h1>
-            <p>Esplora gli hackathon disponibili, oppure accedi per ulteriori operazioni</p>
-            <Link to='/login' className={"btn-primary"}>Login / Registrazione</Link>
-        </div>
-    );
-}
 
 // Componente temporaneo per la Dashboard
 function DashboardView() {
