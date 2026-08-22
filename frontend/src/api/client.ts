@@ -23,7 +23,7 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
     };
 
     // 3. Se il token esiste, aggiunge l'header Bearer JWT
-    if (token) { headers['Authorization'] = `Bearer ${token}`; }
+    if (token) headers['Authorization'] = `Bearer ${token}`;
 
     // 4. Esegui la richiesta HTTP usando il proxy Nginx/Vite per la rotta /api
     const response = await fetch(`${BASE_URL}${endpoint}`, {
@@ -39,15 +39,10 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
     }
 
     // 6. Gestione di altri casi di errore
-    if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(errorData || 'Errore nella richiesta al server');
-    }
+    if (!response.ok) throw new Error((await response.text()) || 'Errore nella richiesta al server');
 
     // 7. Altrimenti la richiesta è andata a buon fine. Ritorna json oppure text in modo intelligente
     const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-        return await response.json();
-    }
+    if (contentType && contentType.includes('application/json')) return await response.json();
     return (await response.text()) as unknown as T;
 }

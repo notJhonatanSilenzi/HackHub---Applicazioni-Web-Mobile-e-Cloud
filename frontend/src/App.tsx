@@ -1,14 +1,55 @@
 /**
- * Questa è la pagina Home, l'unica pagina di questo applicativo, in quanto si è scelto
- * di realizzare una Single-Page Application.
+ * Questa è la sezione di configurazione della navigazione tra viste, della configurazione
+ * delle rotte Browser, Routes e Route
  */
 
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import AuthView from "./views/AuthView.tsx";
 import './index.css'
 
+// Componente temporaneo per la Home
+function HomeView() {
+    return (
+        <div className="container">
+            <h1 className={"title"}>Benvenuto su HackHub</h1>
+            <p>Esplora gli hackathon disponibili, oppure accedi per ulteriori operazioni</p>
+            <Link to='/login' className={"btn-primary"}>Login / Registrazione</Link>
+        </div>
+    );
+}
+
+// Componente temporaneo per la Dashboard
+function DashboardView() {
+    return (
+        <div className="container">
+            <h1 className={"title"}>Dashboard Riservata</h1>
+            <p>Area di gestione hackathon, team o notifiche / richieste</p>
+            <button onClick={() => {
+                localStorage.removeItem('token');
+                window.location.href="/login";
+            }}>Logout</button>
+        </div>
+    );
+}
+
 export default function App() {
-  return (
-      <div className={"title"}>
-        <h1>HackHub</h1>
-      </div>
-  );
+    return (
+        <BrowserRouter>
+            <header className="navbar">
+                <Link to={"/"} className={"brand"}>
+                    <nav>
+                        <Link to={"/"}>Home</Link> | <Link to={"/login"}>Login</Link>
+                    </nav>
+                </Link>
+            </header>
+
+            <main>
+                <Routes>
+                    <Route path="/" element={<HomeView />} />
+                    <Route path="/auth" element={<AuthView />} />
+                    <Route path="/dashboard" element={<DashboardView />} />
+                </Routes>
+            </main>
+        </BrowserRouter>
+    );
 }
