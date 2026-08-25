@@ -36,7 +36,7 @@ export default function App() {
             <main>
                 <Routes>
                     <Route path="/" element={<HomeView />} />
-                    <Route path="/auth" element={<AuthView />} />
+                    <Route path="/login" element={<AuthView />} />
                     <Route path="/dashboard" element={<DashboardView />} />
                 </Routes>
             </main>

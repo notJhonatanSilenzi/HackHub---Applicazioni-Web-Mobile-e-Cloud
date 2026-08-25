@@ -53,5 +53,9 @@ services:
     depends_on:
       - backend
 
+networks:
+  hackhub-net:
+    driver: bridge
+
 volumes:
   hackhub_mysql_data:

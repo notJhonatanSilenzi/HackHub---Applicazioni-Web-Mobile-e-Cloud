@@ -2,7 +2,7 @@
  * Modulo per la gestione delle chiamate HTTP di login e registrione
  */
 
-import { fetchApi} from "./client.ts";
+import { fetchApi } from "./client.ts";
 
 export interface LoginRequest { // interfaccia per richiedere un'autenticazione
     nomeUtente: string;

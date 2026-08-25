@@ -4,8 +4,6 @@
  * applicativo
  */
 
-const BASE_URL = '/api';
-
 /**
  * Funzione centralizzata per l'esecuzione di chiamate HTTP. Aggiunge automaticamente
  * l'header Authorization se è presente un JWT in LocalStorage
@@ -19,6 +17,7 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
     // 2. Prepara le intestazioni HTTP (Headers)
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
         ...(options.headers as Record<string, string>),
     };
 
@@ -26,7 +25,7 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     // 4. Esegui la richiesta HTTP usando il proxy Nginx/Vite per la rotta /api
-    const response = await fetch(`${BASE_URL}${endpoint}`, {
+    const response = await fetch(`/api${endpoint}`, {
         ...options,
         headers,
     });
@@ -39,7 +38,7 @@ export async function fetchApi<T = any>(endpoint: string, options: RequestInit =
     }
 
     // 6. Gestione di altri casi di errore
-    if (!response.ok) throw new Error((await response.text()) || 'Errore nella richiesta al server');
+    if (!response.ok) throw new Error(`Errore ${response.status}: ${(await response.text()) || response.statusText}`);
 
     // 7. Altrimenti la richiesta è andata a buon fine. Ritorna json oppure text in modo intelligente
     const contentType = response.headers.get('content-type');

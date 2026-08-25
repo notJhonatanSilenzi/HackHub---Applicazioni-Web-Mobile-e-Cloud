@@ -35,6 +35,18 @@ public class JwtFiltro extends OncePerRequestFilter {
         this.repositoryUtente = repositoryUtente;
     }
 
+    /**
+     * Evita di eseguire la validazione del JWT sulle rotte di autenticazione
+     * @param request current HTTP request
+     * @return true se la richiesta NON deve essere filtrata, false altrimenti
+     */
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/api/autenticazione/")
+                || (path.startsWith("/api/hackathon") && "GET".equalsIgnoreCase(request.getMethod()));
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain chain) throws ServletException, IOException {
         String header = request.getHeader("Authorization");

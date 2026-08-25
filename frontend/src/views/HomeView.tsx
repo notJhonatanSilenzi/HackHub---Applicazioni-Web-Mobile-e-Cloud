@@ -5,10 +5,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-// Interfaccia per esporre le info pubbliche degli hackathon nella Home
 export interface Hackathon {
     nome: string;
-    dataInizio: string; // ISO String del backend
+    dataInizio: string;
     dataFine: string;
     luogo: string;
     premio: number;
@@ -24,6 +23,7 @@ export interface Hackathon {
 }
 
 export default function HomeView() {
+    const isAuthenticated = Boolean(localStorage.getItem('token'));
     const [hackathons, setHackathons] = useState<Hackathon[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -32,49 +32,79 @@ export default function HomeView() {
         let isMounted = true;
         const fetchHackathons = async () => {
             try {
-                const response = await fetch('/api/hackathon');
+                const response = await fetch('/api/hackathon', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
                 if (!response.ok) {
-                    // Stampa il codice esatto (es. 404, 500, 403) nella console F12
                     console.error(`HTTP error! Status: ${response.status}`);
                     throw new Error(`Errore dal server (Codice ${response.status})`);
                 }
                 const data: Hackathon[] = await response.json();
                 if (isMounted) setHackathons(data);
             } catch (err: unknown) {
-                if (isMounted)
+                if (isMounted) {
                     if (err instanceof Error) setError(err.message);
                     else setError('Si è verificato un errore anomalo');
-            } finally {
-                if (isMounted) setLoading(false);
-            }
+                }
+            } finally { if (isMounted) setLoading(false); }
         };
 
-        // Usiamo 'void' per indicare esplicitamente a TypeScript/IntelliJ che l'esecuzione async è intenzionale
         void fetchHackathons();
 
         return () => { isMounted = false; };
     }, []);
 
-    if (loading) return <div className="container">Caricamento in corso...</div>;
-    if (error) return <div className="container">{error}</div>;
-
     return (
-        <div className="container">
-            <h1>Info Pubbliche Hackathon</h1>
-            {hackathons.length === 0 ? (
-                <div>
-                    <p>Nessun hackathon presente al momento</p>
-                </div>)
-            : (
-                    <div className={"hackathon-grid"}>
+        <div className="container home-container">
+            <header className="hero-section">
+                <h1>Benvenuto su HackHub</h1>
+                <p className="hero-subtitle">
+                    La piattaforma completa per organizzare, partecipare e gestire hackathon in modo semplice e veloce.
+                </p>
+            </header>
+
+            <section className="features-section">
+                <h2>Cosa puoi fare su HackHub?</h2>
+                <div className="features-grid">
+                    <div className="feature-card">
+                        <h3>Partecipa ed Esplora</h3>
+                        <p>Crea la tua squadra, invita i tuoi compagni e iscriviti agli hackathon disponibili.</p>
+                    </div>
+                    <div className="feature-card">
+                        <h3>Organizza Eventi</h3>
+                        <p>Configura i dettagli dell'hackathon, gestisci i posti disponibili e nomina mentori e giudici.</p>
+                    </div>
+                    <div className="feature-card">
+                        <h3>Gestisci il Team</h3>
+                        <p>Invia inviti ai membri, gestisci la rosa dei partecipanti e trasferisci i ruoli di leadership.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="hackathons-section">
+                <h2>Hackathon Pubblici</h2>
+
+                {loading && <div className="loading-message">Caricamento hackathon in corso...</div>}
+
+                {error && <div className="error-message">{error}</div>}
+
+                {!loading && !error && hackathons.length === 0 && (
+                    <p className="empty-message">Nessun hackathon presente al momento.</p>
+                )}
+
+                {!loading && !error && hackathons.length > 0 && (
+                    <div className="hackathon-grid">
                         {hackathons.map((h, index) => (
                             <div key={index} className="hackathon-card">
-                                <div className={"hackathon-header"}>
+                                <div className="hackathon-header">
                                     <h3>{h.nome}</h3>
                                     <span className={`badge ${h.stato.toLowerCase()}`}>{h.stato}</span>
                                 </div>
-                                <p>{h.luogo}</p>
-                                <div>Premio: {h.premio}€</div>
+                                <p><strong>Luogo:</strong> {h.luogo}</p>
+                                <div><strong>Premio:</strong> {h.premio}€</div>
                                 <div>
                                     <p><strong>Date:</strong> {new Date(h.dataInizio).toLocaleDateString()} - {new Date(h.dataFine).toLocaleDateString()}</p>
                                     <p><strong>Scadenza Iscrizioni:</strong> {new Date(h.scadenzaIscrizioni).toLocaleDateString()}</p>
@@ -88,13 +118,28 @@ export default function HomeView() {
                                         <p>{h.regolamento}</p>
                                     </div>
                                 )}
-                                <div className={"hackathon-footer"}>
-                                    <Link to="/login" className={"btn-primary"}>Iscrivi il tuo team</Link>
+                                <div className="hackathon-footer">
+                                    <Link to={isAuthenticated ? "/dashboard" : "/login"} className="btn-primary">
+                                        {isAuthenticated ? "Vai alla Dashboard" : "Iscrivi il tuo team"}
+                                    </Link>
                                 </div>
                             </div>
                         ))}
                     </div>
                 )}
+            </section>
+
+            <footer className="home-actions">
+                {isAuthenticated ? (
+                    <Link to="/dashboard" className="btn-primary">
+                        Vai alla tua Dashboard
+                    </Link>
+                ) : (
+                    <Link to="/login" className="btn-primary">
+                        Inizia Ora
+                    </Link>
+                )}
+            </footer>
         </div>
     );
 }
