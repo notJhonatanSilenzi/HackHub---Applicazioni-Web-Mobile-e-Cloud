@@ -89,4 +89,14 @@ public class VisualizzaBoundary {
         List<InfoHackathonDTO> infoHackathon = handler.viewInfoHackathon();
         return ResponseEntity.status(HttpStatus.OK).body(infoHackathon);
     }
+
+    /**
+     * Metodo che ritorna le info di un utente, ovvero nome, email e nome del team a
+     * cui appartiene, se appartiene a un team
+     */
+    @GetMapping("/utente/me")
+    public ResponseEntity<InfoUtenteDTO> viewInfoUtente(@AuthenticationPrincipal String nomeUtente) {
+        InfoUtenteDTO dto = handler.viewInfoUtente(nomeUtente);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
 }

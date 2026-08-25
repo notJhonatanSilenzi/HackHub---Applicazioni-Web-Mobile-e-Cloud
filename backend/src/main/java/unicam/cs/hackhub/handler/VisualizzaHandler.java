@@ -13,6 +13,7 @@ import unicam.cs.hackhub.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,18 +24,20 @@ public class VisualizzaHandler {
     private final RepositoryNotifica repositoryNotifica;
     private final RepositoryUtente repositoryUtente;
     private final RepositoryStaff repositoryStaff;
+    private final RepositoryMembriTeam repositoryTeam;
 
     /**
      * Costruttore che inizializza questo handler per visualizzare liste di oggetti
      *
      * @param repositoryHackathon la repository degli hackathon
      */
-    public VisualizzaHandler(RepositoryHackathon repositoryHackathon, RepositoryRichiesta repositoryRichiesta, RepositoryNotifica repositoryNotifica, RepositoryUtente repositoryUtente, RepositoryStaff repositoryStaff) {
+    public VisualizzaHandler(RepositoryHackathon repositoryHackathon, RepositoryRichiesta repositoryRichiesta, RepositoryNotifica repositoryNotifica, RepositoryUtente repositoryUtente, RepositoryStaff repositoryStaff, RepositoryMembriTeam repositoryTeam) {
         this.repositoryHackathon = repositoryHackathon;
         this.repositoryRichiesta = repositoryRichiesta;
         this.repositoryNotifica = repositoryNotifica;
         this.repositoryUtente = repositoryUtente;
         this.repositoryStaff = repositoryStaff;
+        this.repositoryTeam = repositoryTeam;
     }
 
     private Hackathon validaAutorizzazioni(String nomeUtente, String nomeHackathon) {
@@ -146,5 +149,17 @@ public class VisualizzaHandler {
                     h.getRegolamento()));
         }
         return listInfoHackathonDTO;
+    }
+
+    /**
+     * Metodo che ritorna le info di un utente, ovvero nome, email e nome del team
+     * di appartenenza, se presente
+     */
+    @Transactional
+    public InfoUtenteDTO viewInfoUtente(String nomeUtente) {
+        Utente utente = verificaUtenteOrFail(nomeUtente);
+        Optional<MembroTeam> membro = repositoryTeam.findByUtente_NomeUtente(nomeUtente);
+        return new InfoUtenteDTO(utente.getNomeUtente(), utente.getEmail(),
+            membro.isPresent() ? membro.get().getTeam().getNome() : "NESSUN TEAM");
     }
 }

@@ -6,21 +6,10 @@
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import AuthView from "./views/AuthView.tsx";
 import HomeView from './views/HomeView';
+import DashboardView from "./views/DashboardView.tsx";
+import CreaHackathonView from "./views/CreaHackathonView.tsx";
+import InfoUtenteView from "./views/InfoUtenteView.tsx";
 import './index.css'
-
-// Componente temporaneo per la Dashboard
-function DashboardView() {
-    return (
-        <div className="container">
-            <h1 className={"title"}>Dashboard Riservata</h1>
-            <p>Area di gestione hackathon, team o notifiche / richieste</p>
-            <button onClick={() => {
-                localStorage.removeItem('token');
-                window.location.href="/login";
-            }}>Logout</button>
-        </div>
-    );
-}
 
 export default function App() {
     return (
@@ -38,7 +27,8 @@ export default function App() {
                     <Route path="/" element={<HomeView />} />
                     <Route path="/login" element={<AuthView />} />
                     <Route path="/dashboard" element={<DashboardView />} />
-                </Routes>
+                    <Route path="/crea-hackathon" element={<CreaHackathonView />} />
+                    <Route path="/profilo" element={<InfoUtenteView />} />                </Routes>
             </main>
         </BrowserRouter>
     );
