@@ -1,0 +1,10 @@
+$kind: http-request
+name: Leader chiede assistenza
+url: http://localhost:8081/api/assistenza/richiesta?nomeMentore=...&nomeHackathon=...
+method: POST
+queryParams:
+  nomeMentore: ...
+  nomeHackathon: ...
+auth:
+  type: bearer
+order: 365552918164570

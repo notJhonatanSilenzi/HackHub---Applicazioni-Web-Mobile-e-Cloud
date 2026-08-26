@@ -1,0 +1,11 @@
+$kind: http-request
+name: Invita utenti
+url: http://localhost:8081/api/team/mio/invito?nomeUtenteDaInvitare=...
+method: POST
+queryParams:
+  nomeUtenteDaInvitare: ...
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 4428707537127468

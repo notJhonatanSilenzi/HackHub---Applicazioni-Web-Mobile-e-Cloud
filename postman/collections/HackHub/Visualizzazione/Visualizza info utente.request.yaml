@@ -1,0 +1,7 @@
+$kind: http-request
+name: Visualizza info utente
+url: http://localhost:8081/api/utente/me
+method: GET
+auth:
+  type: bearer
+order: 4500795412069397

@@ -1,0 +1,9 @@
+$kind: http-request
+name: Nomina mentore
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/nomine-mentori?nomeUtenteDaInvitare=...
+method: POST
+queryParams:
+  nomeUtenteDaInvitare: ...
+auth:
+  type: bearer
+order: 4373316852477453

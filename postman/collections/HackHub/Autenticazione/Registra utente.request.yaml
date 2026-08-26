@@ -1,0 +1,16 @@
+$kind: http-request
+name: Registra utente
+url: http://localhost:8081/api/autenticazione/registrazione
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"nomeUtente\": \"nomeUtente\",\r
+
+    \    \"email\": \"email\",\r
+
+    \    \"password\": \"123456\"\r
+
+    }"
+order: 4118805503362343

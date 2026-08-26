@@ -1,0 +1,10 @@
+$kind: http-request
+name: Invia sottomissione
+url: http://localhost:8081/api/sottomissioni/{nomeHackathon}
+method: POST
+body:
+  type: json
+  content: '"Link"'
+auth:
+  type: bearer
+order: 1787753921626

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Espelle team
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/team/{nomeTeam}/espulsione
+method: POST
+auth:
+  type: bearer
+order: 4394908781748061

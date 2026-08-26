@@ -1,0 +1,7 @@
+$kind: http-request
+name: Esci dal team
+url: http://localhost:8081/api/team/membri/me
+method: DELETE
+auth:
+  type: bearer
+order: 3567401477115770

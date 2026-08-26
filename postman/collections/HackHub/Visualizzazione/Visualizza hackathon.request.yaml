@@ -1,0 +1,5 @@
+$kind: http-request
+name: Visualizza hackathon
+url: http://localhost:8081/api/hackathon
+method: GET
+order: 4497296861652191

@@ -1,0 +1,9 @@
+$kind: http-request
+name: Visualizza richieste
+url: http://localhost:8081/api/richieste
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 4464655143491743

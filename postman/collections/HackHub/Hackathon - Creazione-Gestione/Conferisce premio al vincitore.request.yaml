@@ -1,0 +1,9 @@
+$kind: http-request
+name: Conferisce premio al vincitore
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/liquidazione-premio?nomeTeam=...
+method: POST
+queryParams:
+  nomeTeam: ...
+auth:
+  type: bearer
+order: 4411381070237886

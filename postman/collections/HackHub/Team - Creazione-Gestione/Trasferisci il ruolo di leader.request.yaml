@@ -1,0 +1,9 @@
+$kind: http-request
+name: Trasferisci il ruolo di leader
+url: http://localhost:8081/api/team/leader?nomeMembro=...
+method: POST
+queryParams:
+  nomeMembro: ...
+auth:
+  type: bearer
+order: 4396609000209402

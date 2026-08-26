@@ -7,9 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 interface Hackathon {
     id: number;
-    titolo: string;
-    descrizione: string;
-    scadenzaIscrizione: string;
+    nome: string;
+    scadenzaIscrizioni: string;
 }
 
 export default function IscriviTeamView() {
@@ -93,18 +92,10 @@ export default function IscriviTeamView() {
                 <form onSubmit={handleSubmit} className="form-card">
                     <div className="form-group">
                         <label htmlFor="hackathon-select">Seleziona Hackathon:</label>
-                        <select
-                            id="hackathon-select"
-                            value={selectedHackathonId}
-                            onChange={(e) => setSelectedHackathonId(e.target.value)}
-                            disabled={submitting}
-                            required
-                        >
+                        <select id="hackathon-select" value={selectedHackathonId} onChange={(e) => setSelectedHackathonId(e.target.value)} disabled={submitting} required>
                             <option value="">-- Scegli un hackathon --</option>
                             {hackathons.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.titolo} (Scadenza: {h.scadenzaIscrizione})
-                                </option>
+                                <option key={h.id} value={h.id}>{h.nome}</option>
                             ))}
                         </select>
                     </div>

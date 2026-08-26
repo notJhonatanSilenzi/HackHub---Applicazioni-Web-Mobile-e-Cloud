@@ -1,0 +1,9 @@
+$kind: http-request
+name: Proclama vincitore
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/vincitore?nomeTeam=...
+method: POST
+queryParams:
+  nomeTeam: ...
+auth:
+  type: bearer
+order: 4406829264891681

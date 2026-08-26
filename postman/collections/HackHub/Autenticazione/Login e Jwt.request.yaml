@@ -1,0 +1,14 @@
+$kind: http-request
+name: Login e Jwt
+url: http://localhost:8081/api/autenticazione/accesso
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"nomeUtente\":\"nomeUtente\",\r
+
+    \    \"password\":\"123456\"\r
+
+    }"
+order: 4329905267630445

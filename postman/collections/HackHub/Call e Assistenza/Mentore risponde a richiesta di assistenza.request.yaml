@@ -1,0 +1,9 @@
+$kind: http-request
+name: Mentore risponde a richiesta di assistenza
+url: http://localhost:8081/api/richieste-supporto/risposta?idNotifica=...
+method: POST
+queryParams:
+  idNotifica: ...
+auth:
+  type: bearer
+order: 1251685426517871

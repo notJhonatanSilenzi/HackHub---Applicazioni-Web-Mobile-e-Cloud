@@ -1,0 +1,7 @@
+$kind: http-request
+name: Visualizza notifiche
+url: http://localhost:8081/api/notifiche
+method: GET
+auth:
+  type: bearer
+order: 4491464028067317

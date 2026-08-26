@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { fetchHackathons } from "../api/hackathonService";
-import type { Hackathon } from "../api/hackathonService";
+import { fetchHackathons } from "./hackathonService.ts";
+import type { Hackathon } from "./hackathonService.ts";
 
 export function useHackathons() {
     const isAuthenticated = Boolean(localStorage.getItem('token'));

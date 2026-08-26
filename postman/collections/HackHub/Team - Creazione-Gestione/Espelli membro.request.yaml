@@ -1,0 +1,7 @@
+$kind: http-request
+name: Espelli membro
+url: http://localhost:8081/api/team/membri/{nomeMembro}
+method: DELETE
+auth:
+  type: bearer
+order: 4350232068932947

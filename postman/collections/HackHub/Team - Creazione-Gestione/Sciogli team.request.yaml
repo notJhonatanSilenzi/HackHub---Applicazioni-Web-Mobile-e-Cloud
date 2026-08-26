@@ -1,0 +1,7 @@
+$kind: http-request
+name: Sciogli team
+url: http://localhost:8081/api/team/mio
+method: DELETE
+auth:
+  type: bearer
+order: 4112261484807042

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Annulla iscrizione all'hackathon
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/iscrizioni/mia
+method: DELETE
+auth:
+  type: bearer
+order: 1473820516680673

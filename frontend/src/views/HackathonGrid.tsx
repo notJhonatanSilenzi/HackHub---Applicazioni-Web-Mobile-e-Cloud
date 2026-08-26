@@ -17,7 +17,7 @@ export default function HackathonGrid({ hackathons, isAuthenticated }: Hackathon
                 <div key={index} className="hackathon-card">
                     <div className="hackathon-header">
                         <h3>{h.nome}</h3>
-                        <span className={`badge ${h.stato.toLowerCase()}`}>{h.stato}</span>
+                        <span className={`badge ${h.stato.replaceAll("_", " ").toLowerCase()}`}>{h.stato}</span>
                     </div>
                     <p><strong>Luogo:</strong> {h.luogo}</p>
                     <div><strong>Premio:</strong> {h.premio}€</div>

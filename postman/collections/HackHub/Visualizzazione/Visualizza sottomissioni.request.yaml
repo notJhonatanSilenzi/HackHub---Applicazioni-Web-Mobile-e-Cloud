@@ -1,0 +1,7 @@
+$kind: http-request
+name: Visualizza sottomissioni
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/sottomissioni
+method: GET
+auth:
+  type: bearer
+order: 783400970811454

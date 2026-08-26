@@ -1,0 +1,10 @@
+$kind: http-request
+name: Cambia nome team
+url: http://localhost:8081/api/team
+method: PATCH
+body:
+  type: json
+  content: '"nomeTeam"'
+auth:
+  type: bearer
+order: 2484741339913548

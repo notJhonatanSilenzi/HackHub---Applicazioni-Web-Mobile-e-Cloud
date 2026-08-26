@@ -1,0 +1,6 @@
+$kind: http-request
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/iscrizioni
+method: POST
+auth:
+  type: bearer
+order: 1268815822983575

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Visualizza iscrizioni
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/iscrizioni
+method: GET
+auth:
+  type: bearer
+order: 4460956791915739

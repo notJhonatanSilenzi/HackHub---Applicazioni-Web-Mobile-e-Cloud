@@ -1,0 +1,35 @@
+$kind: http-request
+url: http://localhost:8081/api/hackathon
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"nome\": \"string\",\r
+
+    \    \"dataInizio\": \"date (`yyyy-MM-dd`)\",\r
+
+    \    \"dataFine\": \"date (`yyyy-MM-dd`)\",\r
+
+    \    \"luogo\": \"string\",\r
+
+    \    \"premio\": \"number\",\r
+
+    \    \"teamMin\": \"int [3..6]\",\r
+
+    \    \"teamMax\": \"int [3..6]\",\r
+
+    \    \"maxIscrizioni\": \"int >= 1\",\r
+
+    \    \"regolamento\": \"string\",\r
+
+    \    \"scadenzaIscrizioni\": \"datetime (`yyyy-MM-dd'T'HH:mm:ss`)\",\r
+
+    \    \"nomeGiudice\": \"string\",\r
+
+    \    \"nomeMentori\": \"string[] (min 1)\"\r
+
+    }"
+auth:
+  type: bearer
+order: 1787752432351

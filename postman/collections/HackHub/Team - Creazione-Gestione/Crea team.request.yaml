@@ -1,0 +1,12 @@
+$kind: http-request
+name: Crea team
+url: http://localhost:8081/api/team
+method: POST
+body:
+  type: json
+  content: '"nomeTeam"'
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 1787753520804

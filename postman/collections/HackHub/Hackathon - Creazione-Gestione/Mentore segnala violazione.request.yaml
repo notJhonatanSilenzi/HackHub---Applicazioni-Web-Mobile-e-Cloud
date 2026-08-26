@@ -1,0 +1,9 @@
+$kind: http-request
+name: Mentore segnala violazione
+url: http://localhost:8081/api/{nomeHackathon}/violazione?nomeTeam=...
+method: POST
+queryParams:
+  nomeTeam: ...
+auth:
+  type: bearer
+order: 2297087544276580

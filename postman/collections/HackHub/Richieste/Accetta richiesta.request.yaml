@@ -1,0 +1,9 @@
+$kind: http-request
+name: Accetta richiesta
+url: http://localhost:8081/api/richieste/{idRichiesta}/accetta
+method: POST
+auth:
+  type: bearer
+  credentials:
+    token: ""
+order: 1787754319495

@@ -1,0 +1,7 @@
+$kind: http-request
+name: Visualizza valutazioni
+url: http://localhost:8081/api/hackathon/{nomeHackathon}/valutazioni
+method: GET
+auth:
+  type: bearer
+order: 1787754426417

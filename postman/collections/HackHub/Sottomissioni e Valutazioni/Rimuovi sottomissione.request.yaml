@@ -1,0 +1,7 @@
+$kind: http-request
+name: Rimuovi sottomissione
+url: http://localhost:8081/api/sottomissioni/{nomeHackathon}
+method: DELETE
+auth:
+  type: bearer
+order: 1744133810335006

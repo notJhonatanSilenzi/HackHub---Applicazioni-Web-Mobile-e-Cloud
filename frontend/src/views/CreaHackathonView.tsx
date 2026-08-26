@@ -24,6 +24,23 @@ export default function CreaHackathonView() {
     const [error, setError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+    const [mentori, setMentori] = useState<string[]>([""]);
+    const [giudice, setGiudice] = useState<string>("");
+    // Aggiorna il nome del mentore a un determinato indice
+    const handleMentoreChange = (index: number, value: string) => {
+        const nuoviMentori = [...mentori];
+        nuoviMentori[index] = value;
+        setMentori(nuoviMentori);
+    };
+
+    // Aggiunge un nuovo campo vuoto
+    const addMentoreField = () => { setMentori([...mentori, ""]); };
+
+    // Rimuove un campo (solo se ce n'è più di uno)
+    const removeMentoreField = (index: number) => {
+        if (mentori.length > 1) setMentori(mentori.filter((_, i) => i !== index));
+    };
+
     // Rilevamento dei cambiamenti nel form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
@@ -32,6 +49,7 @@ export default function CreaHackathonView() {
             [name]: type === "number" ? Number(value) : value,
         }));
     };
+
     // Gestione dell'invio dei dati inseriti nel form
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -54,7 +72,12 @@ export default function CreaHackathonView() {
                     "Content-Type": "application/json",
                     "Accept": "application/json",
                     "Authorization": `Bearer ${token}`,
-                }
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    nomeGiudice: giudice.trim(),
+                    nomeMentori: mentori.map((mentore) => mentore.trim()).filter(Boolean),
+                }),
             });
             if (!response.ok) {
                 if (response.status === 403) throw new Error("Non hai i permessi per creare l'hackathon o la sessione è scaduta");
@@ -94,12 +117,12 @@ export default function CreaHackathonView() {
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="dataInizio">Data Inizio *</label>
-                        <input type="datetime-local" id="dataInizio" name="dataInizio" value={formData.dataInizio} onChange={handleChange} required/>
+                        <input type="datetime" id="dataInizio" name="dataInizio" value={formData.dataInizio} onChange={handleChange} required/>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="dataFine">Data Fine *</label>
-                        <input type="datetime-local" id="dataFine" name="dataFine" value={formData.dataFine} onChange={handleChange} required/>
+                        <input type="datetime" id="dataFine" name="dataFine" value={formData.dataFine} onChange={handleChange} required/>
                     </div>
                 </div>
 
@@ -135,6 +158,34 @@ export default function CreaHackathonView() {
                 <div className="form-group">
                     <label htmlFor="regolamento">Regolamento</label>
                     <textarea id="regolamento" name="regolamento" rows={4} placeholder="Inserisci il regolamento o le istruzioni dell'hackathon..." value={formData.regolamento} onChange={handleChange}/>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="giudice">Username Giudice *</label>
+                    <input id="giudice" type="text" value={giudice} onChange={(e) => setGiudice(e.target.value)} required/>
+                </div>
+
+                {/* Sezione Mentori Dinamici */}
+                <div className="form-group">
+                    <label>Username Mentori (Almeno 1) *</label>
+                    {mentori.map((mentore, index) => (
+                        <div key={index} className="mentore-input-row" style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                            <input type="text" placeholder={`Username Mentore ${index + 1}`} value={mentore} onChange={(e) => handleMentoreChange(index, e.target.value)} required={index === 0}/>
+                            {mentori.length > 1 && (
+                                <button
+                                    type="button"
+                                    onClick={() => removeMentoreField(index)}
+                                    className="btn-remove"
+                                >
+                                    ✕
+                                </button>
+                            )}
+                        </div>
+                    ))}
+
+                    <button type="button" onClick={addMentoreField} className="btn-secondary">
+                        + Aggiungi un altro mentore
+                    </button>
                 </div>
 
                 <button type="submit" className="btn-primary" disabled={loading}>
