@@ -9,6 +9,8 @@ import HomeView from './views/HomeView';
 import DashboardView from "./views/DashboardView.tsx";
 import CreaHackathonView from "./views/CreaHackathonView.tsx";
 import InfoUtenteView from "./views/InfoUtenteView.tsx";
+import IscriviTeamView from "./views/IscriviTeamView.tsx";
+import HackathonListView from "./views/HackathonListView.tsx";
 import './index.css'
 
 export default function App() {
@@ -28,7 +30,10 @@ export default function App() {
                     <Route path="/login" element={<AuthView />} />
                     <Route path="/dashboard" element={<DashboardView />} />
                     <Route path="/crea-hackathon" element={<CreaHackathonView />} />
-                    <Route path="/profilo" element={<InfoUtenteView />} />                </Routes>
+                    <Route path="/profilo" element={<InfoUtenteView />} />
+                    <Route path="/iscrivi-team" element={<IscriviTeamView />} />
+                    <Route path="/hackathons" element={<HackathonListView />} />
+                </Routes>
             </main>
         </BrowserRouter>
     );

@@ -40,7 +40,7 @@ export default function DashboardView() {
                         <div className="card-icon">📅</div>
                         <h3>Visualizza Hackathon</h3>
                         <p>Esplora la lista completa degli hackathon disponibili e consulta tutti i dettagli.</p>
-                        <Link to="/visualizza-hackathon" className="btn-primary">
+                        <Link to="/hackathons" className="btn-primary">
                             Visualizza Hackathon
                         </Link>
                     </div>
