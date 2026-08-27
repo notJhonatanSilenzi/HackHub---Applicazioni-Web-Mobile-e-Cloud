@@ -3,7 +3,7 @@
  * http pubblica, senza Jwt
  */
 
-export interface Hackathon {
+export interface Hackathon { // Interfaccia per rappresentare un hackathon nel frontend
     nome: string;
     dataInizio: string;
     dataFine: string;
@@ -20,18 +20,21 @@ export interface Hackathon {
     regolamentoDisponibile: string;
 }
 
+/**
+ * Funzione asincrona per gestire eventuali errori nella fetch degli hackathon
+ */
 export async function fetchHackathons(): Promise<Hackathon[]> {
-    const response = await fetch('/api/hackathon', {
-        method: 'GET',
+    const response = await fetch("/api/hackathon", { // Effettua la fetch
+        method: "GET",
         headers: {
-            'Accept': 'application/json'
+            "Accept": "application/json"
         }
     });
 
-    if (!response.ok) {
+    if (!response.ok) { // Gestione del messaggio di errore
         console.error(`HTTP error! Status: ${response.status}`);
         throw new Error(`Errore dal server (Codice ${response.status})`);
     }
 
-    return await response.json();
+    return await response.json(); // Attesa della risposta
 }

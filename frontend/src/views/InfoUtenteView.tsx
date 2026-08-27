@@ -11,6 +11,10 @@ export interface InfoUtente {
     nomeTeam: string;
 }
 
+/**
+ * Funzione che ritorna la vista sulle informazioni dell'utente autenticato
+ * @constructor
+ */
 export default function InfoUtenteView() {
     const [infoUtente, setInfoUtente] = useState<InfoUtente | null>(null);
     const [loading, setLoading] = useState(true);
@@ -54,31 +58,31 @@ export default function InfoUtenteView() {
     }, []);
 
     return (
-        <div className="container profile-container">
+        <div className="page">
             <header className="page-header">
-                <Link to="/dashboard" className="btn-back">← Torna alla Dashboard</Link>
-                <h1>Profilo Utente</h1>
+                <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
+                <h1 className="page-title">Profilo Utente</h1>
             </header>
 
-            {loading && <div className="loading-message">Caricamento informazioni in corso...</div>}
+            {loading && <div className="message" data-kind="loading">Caricamento informazioni in corso...</div>}
 
-            {error && <div className="error-message">{error}</div>}
+            {error && <div className="message" data-kind="error">{error}</div>}
 
             {!loading && !error && infoUtente && (
-                <div className="profile-card">
-                    <div className="profile-field">
+                <div className="card">
+                    <div className="detail-row">
                         <strong>Nome Utente: </strong>
                         <span>{infoUtente.nomeUtente}</span>
                     </div>
 
-                    <div className="profile-field">
+                    <div className="detail-row">
                         <strong>Email: </strong>
                         <span>{infoUtente.email}</span>
                     </div>
 
-                    <div className="profile-field">
+                    <div className="detail-row">
                         <strong>Team di Appartenenza: </strong>
-                        <span className={`team-badge ${infoUtente.nomeTeam === "Nessuno" ? "no-team" : "has-team"}`}>
+                        <span className="badge" data-status={infoUtente.nomeTeam === "Nessuno" ? "empty" : "present"}>
                             {infoUtente.nomeTeam}
                         </span>
                     </div>

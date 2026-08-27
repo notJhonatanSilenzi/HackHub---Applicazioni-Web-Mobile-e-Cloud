@@ -1,9 +1,37 @@
-/**
-File CSS standard per la pagina Home principale
- */
+/* Classi riutilizzabili condivise da tutte le view. */
 
-.title {
+/* STRUTTURA DELLE VISTE */
+.page {}
+.page-header {}
+.page-title {
   text-align: center;
   font-family: sans-serif;
   font-size: 70px;
 }
+.section {}
+.page-actions {}
+
+/* CARD E CONTENUTI */
+.card {}
+.card-list {}
+.card-title {}
+.card-text {}
+
+/* FORM ED ELEMENTI DI FORM */
+.form {}
+.form-row {}
+.form-field {}
+.form-label {}
+.form-input {}
+
+/* ELEMENTI INTERATTIVI */
+.button {}
+.navigation {}
+.navigation-link {}
+
+/* FEEDBACK E DATI */
+.message {}
+.badge {}
+.table {}
+.table-wrapper {}
+.detail-row {}

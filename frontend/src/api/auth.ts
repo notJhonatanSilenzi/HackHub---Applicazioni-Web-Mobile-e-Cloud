@@ -22,13 +22,13 @@ export interface AuthResponse { // interfaccia per esporre un token JWT dopo un'
  * il JWT e lo salva in localStorage
  */
 export async function login(data: LoginRequest): Promise<AuthResponse> {
-    const res = await fetchApi<AuthResponse>('/autenticazione/accesso', {
-        method: 'POST',
+    const res = await fetchApi<AuthResponse>("/autenticazione/accesso", {
+        method: "POST",
         body: JSON.stringify(data),
     });
     // Distinguo se viene tornato un JSON con un JWT oppure la stringa token
-    const jwt = typeof res === 'string' ? res : res.token;
-    if (jwt) localStorage.setItem('token', jwt);
+    const jwt = typeof res === "string" ? res : res.token;
+    if (jwt) localStorage.setItem("token", jwt);
     return res;
 }
 
@@ -36,16 +36,8 @@ export async function login(data: LoginRequest): Promise<AuthResponse> {
  * Funzione per aggiungere un nuovo utente al database
  */
 export async function register(data: RegisterRequest): Promise<any> {
-    return await fetchApi('/autenticazione/registrazione', {
-        method: 'POST',
+    return await fetchApi("/autenticazione/registrazione", {
+        method: "POST",
         body: JSON.stringify(data),
     });
-}
-
-/**
- * Funzione per effettuare il logout
- */
-export function logout(): void {
-    localStorage.removeItem('token');
-    window.location.href = '/login';
 }

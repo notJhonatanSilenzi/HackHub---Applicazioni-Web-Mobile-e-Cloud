@@ -16,16 +16,16 @@ import './index.css'
 export default function App() {
     return (
         <BrowserRouter>
-            <header className="navbar">
-                <Link to={"/"} className={"brand"}>
-                    <nav>
-                        <Link to={"/"}>Home</Link> | <Link to={"/login"}>Login</Link>
-                    </nav>
-                </Link>
+            <header className="app-header" /* Barra di navigazione */>
+                <nav className="navigation">
+                    <Link to={"/"} className="navigation-link">Home</Link>
+                    <Link to={"/login"} className="navigation-link">Login</Link>
+                    <Link to={"/hackathons"} className="navigation-link">Vedi Hackathon</Link>
+                </nav>
             </header>
 
             <main>
-                <Routes>
+                <Routes /* Tutte le rotte del frontend */>
                     <Route path="/" element={<HomeView />} />
                     <Route path="/login" element={<AuthView />} />
                     <Route path="/dashboard" element={<DashboardView />} />

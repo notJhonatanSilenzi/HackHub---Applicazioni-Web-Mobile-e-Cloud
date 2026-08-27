@@ -11,6 +11,10 @@ interface Hackathon {
     scadenzaIscrizioni: string;
 }
 
+/**
+ * Funzione che ritorna la vista sul form di iscrizione di un team a un hackathon selezionato
+ * @constructor
+ */
 export default function IscriviTeamView() {
     const [hackathons, setHackathons] = useState<Hackathon[]>([]);
     const [selectedHackathonId, setSelectedHackathonId] = useState<string>("");
@@ -74,14 +78,14 @@ export default function IscriviTeamView() {
     };
 
     return (
-        <div className="container iscrivi-team-container">
+        <div className="page">
             <header className="page-header">
-                <Link to="/dashboard" className="btn-back">← Torna alla Dashboard</Link>
-                <h1>Iscrivi il tuo Team ad un Hackathon</h1>
+                <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
+                <h1 className="page-title">Iscrivi il tuo Team ad un Hackathon</h1>
             </header>
 
             {message && (
-                <div className={message.isError ? "error-message" : "success-message"}>
+                <div className="message" data-kind={message.isError ? "error" : "success"}>
                     {message.text}
                 </div>
             )}
@@ -89,10 +93,10 @@ export default function IscriviTeamView() {
             {loading ? (
                 <p>Caricamento hackathon disponibili...</p>
             ) : (
-                <form onSubmit={handleSubmit} className="form-card">
-                    <div className="form-group">
-                        <label htmlFor="hackathon-select">Seleziona Hackathon:</label>
-                        <select id="hackathon-select" value={selectedHackathonId} onChange={(e) => setSelectedHackathonId(e.target.value)} disabled={submitting} required>
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="hackathon-select">Seleziona Hackathon:</label>
+                        <select className="form-input" id="hackathon-select" value={selectedHackathonId} onChange={(e) => setSelectedHackathonId(e.target.value)} disabled={submitting} required>
                             <option value="">-- Scegli un hackathon --</option>
                             {hackathons.map((h) => (
                                 <option key={h.id} value={h.id}>{h.nome}</option>
@@ -100,7 +104,7 @@ export default function IscriviTeamView() {
                         </select>
                     </div>
 
-                    <button type="submit" className="btn-primary" disabled={submitting || !selectedHackathonId}>
+                    <button type="submit" className="button" data-variant="primary" disabled={submitting || !selectedHackathonId}>
                         {submitting ? "Iscrizione in corso..." : "Conferma Iscrizione"}
                     </button>
                 </form>
