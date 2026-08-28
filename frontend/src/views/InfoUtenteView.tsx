@@ -58,36 +58,41 @@ export default function InfoUtenteView() {
     }, []);
 
     return (
-        <div className="page">
+        <>
             <header className="page-header">
-                <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
-                <h1 className="page-title">Profilo Utente</h1>
+                <div className="header-content">
+                    <h1 className="page-title">Profilo Utente</h1>
+                </div>
             </header>
+            <div className="page">
+                {loading && <div className="message" data-kind="loading">Caricamento informazioni in corso...</div>}
 
-            {loading && <div className="message" data-kind="loading">Caricamento informazioni in corso...</div>}
+                {error && <div className="message" data-kind="error">{error}</div>}
 
-            {error && <div className="message" data-kind="error">{error}</div>}
+                {!loading && !error && infoUtente && (
+                    <div className="card">
+                        <div className="detail-row">
+                            <strong>Nome Utente: </strong>
+                            <span>{infoUtente.nomeUtente}</span>
+                        </div>
 
-            {!loading && !error && infoUtente && (
-                <div className="card">
-                    <div className="detail-row">
-                        <strong>Nome Utente: </strong>
-                        <span>{infoUtente.nomeUtente}</span>
-                    </div>
+                        <div className="detail-row">
+                            <strong>Email: </strong>
+                            <span>{infoUtente.email}</span>
+                        </div>
 
-                    <div className="detail-row">
-                        <strong>Email: </strong>
-                        <span>{infoUtente.email}</span>
-                    </div>
-
-                    <div className="detail-row">
-                        <strong>Team di Appartenenza: </strong>
-                        <span className="badge" data-status={infoUtente.nomeTeam === "Nessuno" ? "empty" : "present"}>
+                        <div className="detail-row">
+                            <strong>Team di Appartenenza: </strong>
+                            <span className="badge" data-status={infoUtente.nomeTeam === "Nessuno" ? "empty" : "present"}>
                             {infoUtente.nomeTeam}
                         </span>
+                        </div>
                     </div>
+                )}
+                <div className="page-actions">
+                    <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
                 </div>
-            )}
-        </div>
+            </div>
+        </>
     );
 }

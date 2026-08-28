@@ -16,7 +16,7 @@ import './index.css'
 export default function App() {
     return (
         <BrowserRouter>
-            <header className="app-header" /* Barra di navigazione */>
+            <header className="navigation-bar" /* Barra di navigazione */>
                 <nav className="navigation">
                     <Link to={"/"} className="navigation-link">Home</Link>
                     <Link to={"/login"} className="navigation-link">Login</Link>
@@ -31,7 +31,7 @@ export default function App() {
                     <Route path="/dashboard" element={<DashboardView />} />
                     <Route path="/crea-hackathon" element={<CreaHackathonView />} />
                     <Route path="/profilo" element={<InfoUtenteView />} />
-                    <Route path="/iscrivi-team" element={<IscriviTeamView />} />
+                    <Route path="/iscrivi-team/:nome?" element={<IscriviTeamView />} />
                     <Route path="/hackathons" element={<HackathonListView />} />
                 </Routes>
             </main>

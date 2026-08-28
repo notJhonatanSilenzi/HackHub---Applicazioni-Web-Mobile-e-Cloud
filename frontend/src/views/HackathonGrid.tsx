@@ -56,8 +56,8 @@ export default function HackathonGrid({ hackathons, isAuthenticated }: Hackathon
                         <td>{h.teamMin} - {h.teamMax} membri</td>
                         <td>{h.postiRimanenti}</td>
                         <td>
-                            <Link to={isAuthenticated ? "/dashboard" : "/login"} className="button" data-variant="primary">
-                                {isAuthenticated ? "Dashboard" : "Iscriviti"}
+                            <Link to={isAuthenticated ? `/iscrivi-team/${encodeURIComponent(h.nome)}` : "/login"} className="button" data-variant="primary">
+                                {isAuthenticated ? "Iscriviti" : "Login"}
                             </Link>
                         </td>
                     </tr>

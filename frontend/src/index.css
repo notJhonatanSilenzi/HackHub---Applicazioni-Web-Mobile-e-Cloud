@@ -1,37 +1,312 @@
-/* Classi riutilizzabili condivise da tutte le view. */
+/* ==========================================================================
+   VARIABILI GLOBALI (PALETTE HACKHUB)
+   ========================================================================== */
+:root {
+  --bg-dark: #0f172a;
+  --card-bg: #1e1b4b;
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
 
-/* STRUTTURA DELLE VISTE */
-.page {}
-.page-header {}
+  --accent: #10b981;
+  --accent-hover: #059669;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --transition: all 0.2s ease-in-out;
+}
+
+/* ==========================================================================
+   STRUTTURA DELLE VISTE
+   ========================================================================== */
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, sans-serif;
+  margin: 0;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-header {
+  width: 100%;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  padding: 32px 0;
+  margin-bottom: 32px;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
 .page-title {
   text-align: center;
-  font-family: sans-serif;
-  font-size: 70px;
+  font-size: 2.5rem;
+  color: var(--text-main);
+  margin: 0;
 }
-.section {}
-.page-actions {}
 
-/* CARD E CONTENUTI */
-.card {}
-.card-list {}
-.card-title {}
-.card-text {}
+.section {
+  margin-bottom: 40px;
+}
 
-/* FORM ED ELEMENTI DI FORM */
-.form {}
-.form-row {}
-.form-field {}
-.form-label {}
-.form-input {}
+.page-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-top: 32px;
+  margin-bottom: 40px;
+}
 
-/* ELEMENTI INTERATTIVI */
-.button {}
-.navigation {}
-.navigation-link {}
+.page-actions .button {
+  margin-top: 0;
+}
 
-/* FEEDBACK E DATI */
-.message {}
-.badge {}
-.table {}
-.table-wrapper {}
-.detail-row {}
+/* ==========================================================================
+   CARD E CONTENUTI
+   ========================================================================== */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.2);
+}
+
+.card-title {
+  font-size: 1.25rem;
+  margin-top: 0;
+  color: var(--text-main);
+}
+
+.card-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   FORM ED ELEMENTI DI FORM
+   ========================================================================== */
+.form {
+  background-color: var(--card-bg);
+  padding: 32px;
+  border-radius: var(--radius-md);
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.form-input {
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.form-input[type="datetime-local"] {
+  color-scheme: dark;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+}
+
+.form-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.8);
+}
+
+/* ==========================================================================
+   ELEMENTI INTERATTIVI
+   ========================================================================== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.navigation-bar {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navigation {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.navigation-link {
+  position: relative;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 18px 4px;
+  transition: color 0.25s ease, transform 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.navigation-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.navigation-link:hover {
+  color: var(--text-main);
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.navigation-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.navigation-link:active {
+  transform: scale(0.95);
+  color: var(--accent);
+}
+
+.navigation-link.active {
+  color: var(--accent);
+}
+
+.navigation-link.active::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ==========================================================================
+   FEEDBACK E DATI
+   ========================================================================== */
+.badge {
+  display: inline-block;
+  background-color: var(--accent);
+  color: #000;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.message {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background-color: var(--card-bg);
+  border-left: 4px solid var(--primary);
+  margin-bottom: 20px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th, .table td {
+  padding: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}

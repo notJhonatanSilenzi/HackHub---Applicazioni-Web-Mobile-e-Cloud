@@ -15,24 +15,29 @@ export default function ListaHackathonDashboardView() {
     const { hackathons, loading, error, isAuthenticated } = useHackathons();
 
     // Gestione dinamica di destinazione e testo in base all'autenticazione
-    const backToPath = isAuthenticated ? "/dashboard" : "/";
+    const backToPath = isAuthenticated ? "/dashboard" : "/login";
     const backToLabel = isAuthenticated ? "← Torna alla Dashboard" : "← Torna alla Home";
 
     return (
-        <div className="page">
+        <>
             <header className="page-header">
-                <Link to={backToPath} className="button" data-variant="secondary">
-                    {backToLabel}
-                </Link>
-                <h1 className="page-title">Tutti gli Hackathon Disponibili</h1>
+                <div className="header-content">
+                    <h1 className="page-title">Tutti gli Hackathon Disponibili</h1>
+                </div>
             </header>
+            <div className="page">
+                {loading && <div className="message" data-kind="loading">Caricamento hackathon in corso...</div>}
+                {error && <div className="message" data-kind="error">{error}</div>}
 
-            {loading && <div className="message" data-kind="loading">Caricamento hackathon in corso...</div>}
-            {error && <div className="message" data-kind="error">{error}</div>}
-
-            {!loading && !error && (
-                <HackathonGrid hackathons={hackathons} isAuthenticated={isAuthenticated} />
-            )}
-        </div>
+                {!loading && !error && (
+                    <HackathonGrid hackathons={hackathons} isAuthenticated={isAuthenticated} />
+                )}
+                <div className="page-actions">
+                    <Link to={backToPath} className="button" data-variant="secondary">
+                        {backToLabel}
+                    </Link>
+                </div>
+            </div>
+        </>
     );
 }

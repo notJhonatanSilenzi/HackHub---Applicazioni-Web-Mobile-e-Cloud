@@ -99,97 +99,105 @@ export default function CreaHackathonView() {
     };
 
     return (
-        <div className="page">
-            {error && <div className="message" data-kind="error">{error}</div>}
-            {successMessage && <div className="message" data-kind="success">{successMessage}</div>}
-
-            <form onSubmit={handleSubmit} className="form">
-                <div className="form-field">
-                    <label className="form-label" htmlFor="nome">Nome Hackathon *</label>
-                    <input className="form-input" type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} required/>
-                </div>
-
-                <div className="form-field">
-                    <label className="form-label" htmlFor="luogo">Luogo *</label>
-                    <input className="form-input" type="text" id="luogo" name="luogo" placeholder="Es. Online / Camerino" value={formData.luogo} onChange={handleChange} required/>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="dataInizio">Data Inizio *</label>
-                        <input className="form-input" type="datetime" id="dataInizio" name="dataInizio" value={formData.dataInizio} onChange={handleChange} required/>
-                    </div>
-
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="dataFine">Data Fine *</label>
-                        <input className="form-input" type="datetime" id="dataFine" name="dataFine" value={formData.dataFine} onChange={handleChange} required/>
-                    </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="scadenzaIscrizioni">Scadenza Iscrizioni *</label>
-                        <input className="form-input" type="datetime-local" id="scadenzaIscrizioni" name="scadenzaIscrizioni" value={formData.scadenzaIscrizioni} onChange={handleChange} required/>
-                    </div>
-
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="premio">Premio (€)</label>
-                        <input className="form-input" type="number" id="premio" name="premio" min="0" value={formData.premio} onChange={handleChange}/>
-                    </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="teamMin">Membri Minimi per Team *</label>
-                        <input className="form-input" type="number" id="teamMin" name="teamMin" min="1" value={formData.teamMin} onChange={handleChange} required/>
-                    </div>
-
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="teamMax">Membri Massimi per Team *</label>
-                        <input className="form-input" type="number" id="teamMax" name="teamMax" min="1" value={formData.teamMax} onChange={handleChange} required/>
-                    </div>
-
-                    <div className="form-field">
-                        <label className="form-label" htmlFor="maxIscrizioni">Numero Massimo Team Iscrivibili *</label>
-                        <input className="form-input" type="number" id="maxIscrizioni" name="maxIscrizioni" min="1" value={formData.maxIscrizioni} onChange={handleChange} required/>
-                    </div>
-                </div>
-
-                <div className="form-field">
-                    <label className="form-label" htmlFor="regolamento">Regolamento</label>
-                    <textarea className="form-input" id="regolamento" name="regolamento" rows={4} placeholder="Inserisci il regolamento o le istruzioni dell'hackathon..." value={formData.regolamento} onChange={handleChange}/>
-                </div>
-
-                <div className="form-field">
-                    <label className="form-label" htmlFor="giudice">Username Giudice *</label>
-                    <input className="form-input" id="giudice" type="text" value={giudice} onChange={(e) => setGiudice(e.target.value)} required/>
-                </div>
-
-                {/* Sezione Mentori Dinamici */}
-                <div className="form-field">
-                    <label className="form-label">Username Mentori (Almeno 1) *</label>
-                    {mentori.map((mentore, index) => (
-                        <div key={index} className="form-row">
-                            <input className="form-input" type="text" placeholder={`Username Mentore ${index + 1}`} value={mentore} onChange={(e) => handleMentoreChange(index, e.target.value)} required={index === 0}/>
-                            {mentori.length > 1 && (
-                                <button type="button" onClick={() => removeMentoreField(index)} className="button" data-variant="danger">✕</button>
-                            )}
-                        </div>
-                    ))}
-
-                    <button type="button" onClick={addMentoreField} className="button" data-variant="secondary">
-                        + Aggiungi un altro mentore
-                    </button>
-                </div>
-
-                <button type="submit" className="button" data-variant="primary" disabled={loading}>
-                    {loading ? "Creazione in corso..." : "Crea Hackathon"}
-                </button>
-                <footer className="page-header">
-                    <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
+        <>
+            <header className="page-header">
+                <div className="header-content">
                     <h1 className="page-title">Crea un Nuovo Hackathon</h1>
-                </footer>
-            </form>
-        </div>
+                </div>
+            </header>
+            <div className="page">
+                {error && <div className="message" data-kind="error">{error}</div>}
+                {successMessage && <div className="message" data-kind="success">{successMessage}</div>}
+
+                <form onSubmit={handleSubmit} className="form">
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="nome">Nome Hackathon *</label>
+                        <input className="form-input" type="text" id="nome" name="nome" value={formData.nome} onChange={handleChange} required/>
+                    </div>
+
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="luogo">Luogo *</label>
+                        <input className="form-input" type="text" id="luogo" name="luogo" placeholder="Es. Online / Camerino" value={formData.luogo} onChange={handleChange} required/>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="dataInizio">Data Inizio *</label>
+                            <input className="form-input" type="datetime" id="dataInizio" name="dataInizio" value={formData.dataInizio} onChange={handleChange} required/>
+                        </div>
+
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="dataFine">Data Fine *</label>
+                            <input className="form-input" type="datetime" id="dataFine" name="dataFine" value={formData.dataFine} onChange={handleChange} required/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="scadenzaIscrizioni">Scadenza Iscrizioni *</label>
+                            <input className="form-input" type="datetime-local" id="scadenzaIscrizioni" name="scadenzaIscrizioni" value={formData.scadenzaIscrizioni} onChange={handleChange} required/>
+                        </div>
+
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="premio">Premio (€)</label>
+                            <input className="form-input" type="number" id="premio" name="premio" min="0" value={formData.premio} onChange={handleChange}/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="teamMin">Membri Minimi per Team *</label>
+                            <input className="form-input" type="number" id="teamMin" name="teamMin" min="1" value={formData.teamMin} onChange={handleChange} required/>
+                        </div>
+
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="teamMax">Membri Massimi per Team *</label>
+                            <input className="form-input" type="number" id="teamMax" name="teamMax" min="1" value={formData.teamMax} onChange={handleChange} required/>
+                        </div>
+                    </div>
+
+                    <div className="form-row">
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="maxIscrizioni">Numero Massimo Team Iscrivibili *</label>
+                            <input className="form-input" type="number" id="maxIscrizioni" name="maxIscrizioni" min="1" value={formData.maxIscrizioni} onChange={handleChange} required/>
+                        </div>
+                    </div>
+
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="regolamento">Regolamento</label>
+                        <textarea className="form-input" id="regolamento" name="regolamento" rows={4} placeholder="Inserisci il regolamento o le istruzioni dell'hackathon..." value={formData.regolamento} onChange={handleChange}/>
+                    </div>
+
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="giudice">Username Giudice *</label>
+                        <input className="form-input" id="giudice" type="text" value={giudice} onChange={(e) => setGiudice(e.target.value)} required/>
+                    </div>
+
+                    {/* Sezione Mentori Dinamici */}
+                    <div className="form-field">
+                        <label className="form-label">Username Mentori (Almeno 1) *</label>
+                        {mentori.map((mentore, index) => (
+                            <div key={index} className="form-row">
+                                <input className="form-input" type="text" placeholder={`Username Mentore ${index + 1}`} value={mentore} onChange={(e) => handleMentoreChange(index, e.target.value)} required={index === 0}/>
+                                {mentori.length > 1 && (
+                                    <button type="button" onClick={() => removeMentoreField(index)} className="button" data-variant="danger">✕</button>
+                                )}
+                            </div>
+                        ))}
+
+                        <button type="button" onClick={addMentoreField} className="button" data-variant="secondary">
+                            + Aggiungi un altro mentore
+                        </button>
+                    </div>
+
+                    <button type="submit" className="button" data-variant="primary" disabled={loading}>
+                        {loading ? "Creazione in corso..." : "Crea Hackathon"}
+                    </button>
+                </form>
+            </div>
+            <div className="page-actions">
+                <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
+            </div>
+        </>
     );
 }

@@ -17,65 +17,64 @@ export default function DashboardView() {
     };
 
     return (
-        <div className="page">
-            {/* Header / Navigation Bar */}
+        <>
             <header className="page-header">
-                <div className="page-heading">
+                <div className="header-content">
                     <h1 className="page-title">HackHub</h1>
                     <span className="page-subtitle">Dashboard Riservata</span>
                 </div>
-
-                <nav className="navigation">
-                    <Link to="/" className="navigation-link">Home</Link>
-                    <Link to="/dashboard" className="navigation-link" data-active="true">Dashboard</Link>
-                    <button onClick={handleLogout} className="button" data-variant="danger">
-                        Logout
-                    </button>
-                </nav>
             </header>
+            <div className="page">
+                <main className="page-content">
+                    <h2 className="section-title">Area di Gestione</h2>
+                    <p className="page-text">Seleziona un'operazione per iniziare a gestire le tue attività su HackHub:</p>
 
-            <main className="page-content">
-                <h2 className="section-title">Area di Gestione</h2>
-                <p className="page-text">Seleziona un'operazione per iniziare a gestire le tue attività su HackHub:</p>
+                    <div className="card-list">
+                        {/* Visualizza Hackathon */}
+                        <div className="card">
+                            <h3 className="card-title">Visualizza Hackathon</h3>
+                            <p className="card-text">Esplora la lista completa degli hackathon disponibili e consulta tutti i dettagli.</p>
+                            <Link to="/hackathons" className="button" data-variant="primary">
+                                Visualizza Hackathon
+                            </Link>
+                        </div>
 
-                <div className="card-list">
-                    {/* Visualizza Hackathon */}
-                    <div className="card">
-                        <h3 className="card-title">Visualizza Hackathon</h3>
-                        <p className="card-text">Esplora la lista completa degli hackathon disponibili e consulta tutti i dettagli.</p>
-                        <Link to="/hackathons" className="button" data-variant="primary">
-                            Visualizza Hackathon
-                        </Link>
+                        {/* Visualizza Team */}
+                        <div className="card">
+                            <h3 className="card-title">Visualizza Profilo</h3>
+                            <p className="card-text">Consulta i tuoi dati.</p>
+                            <Link to="/profilo" className="button" data-variant="primary">
+                                Profilo
+                            </Link>
+                        </div>
+
+                        {/* Crea Hackathon */}
+                        <div className="card">
+                            <h3 className="card-title">Organizza un Hackathon</h3>
+                            <p className="card-text">Crea un nuovo evento, definisci le date, i premi, il regolamento e i requisiti.</p>
+                            <Link to="/crea-hackathon" className="button" data-variant="primary">
+                                Crea Hackathon
+                            </Link>
+                        </div>
+
+                        {/* Iscrivi Team */}
+                        <div className="card">
+                            <h3 className="card-title">Iscrivi un Team</h3>
+                            <p className="card-text">Seleziona un team e iscrivilo a uno degli hackathon aperti.</p>
+                            <Link to="/iscrivi-team" className="button" data-variant="primary">
+                                Iscrivi Team
+                            </Link>
+                        </div>
                     </div>
-
-                    {/* Visualizza Team */}
-                    <div className="card">
-                        <h3 className="card-title">Visualizza Profilo</h3>
-                        <p className="card-text">Consulta i tuoi dati.</p>
-                        <Link to="/profilo" className="button" data-variant="primary">
-                            Profilo
-                        </Link>
+                    <div className="page-actions">
+                        <nav className="navigation">
+                            <button onClick={handleLogout} className="button" data-variant="danger">
+                                Logout
+                            </button>
+                        </nav>
                     </div>
-
-                    {/* Crea Hackathon */}
-                    <div className="card">
-                        <h3 className="card-title">Organizza un Hackathon</h3>
-                        <p className="card-text">Crea un nuovo evento, definisci le date, i premi, il regolamento e i requisiti.</p>
-                        <Link to="/crea-hackathon" className="button" data-variant="primary">
-                            Crea Hackathon
-                        </Link>
-                    </div>
-
-                    {/* Iscrivi Team */}
-                    <div className="card">
-                        <h3 className="card-title">Iscrivi un Team</h3>
-                        <p className="card-text">Seleziona un team e iscrivilo a uno degli hackathon aperti.</p>
-                        <Link to="/iscrivi-team" className="button" data-variant="primary">
-                            Iscrivi Team
-                        </Link>
-                    </div>
-                </div>
-            </main>
-        </div>
+                </main>
+            </div>
+        </>
     );
 }

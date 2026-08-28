@@ -38,37 +38,45 @@ export default function AuthView() {
     };
 
     return (
-        <div className="page">
-            <h2 className="page-title">{ isLogin ? "Accedi ad HackHub" : "Registrati su HackHub" }</h2>
-
-            {error && <div className="message" data-kind="error">{error}</div>}
-
-            <form onSubmit={handleSubmit} className="form">
-                <div className="form-field">
-                    <label className="form-label" htmlFor="nomeUtente">Nome Utente:</label>
-                    <input className="form-input" id="nomeUtente" type="text" required value={nomeUtente} onChange={(e) => setNomeUtente(e.target.value)}/>
+        <>
+            <header className="page-header">
+                <div className="header-content">
+                    <h2 className="page-title">{ isLogin ? "Accedi ad HackHub" : "Registrati su HackHub" }</h2>
                 </div>
+            </header>
+            <div className="page">
 
-                {!isLogin && (
+                {error && <div className="message" data-kind="error">{error}</div>}
+
+                <form onSubmit={handleSubmit} className="form">
                     <div className="form-field">
-                        <label className="form-label" htmlFor="email">Email:</label>
-                        <input className="form-input" id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <label className="form-label" htmlFor="nomeUtente">Nome Utente:</label>
+                        <input className="form-input" id="nomeUtente" type="text" required value={nomeUtente} onChange={(e) => setNomeUtente(e.target.value)}/>
                     </div>
-                )}
 
-                <div className="form-field">
-                    <label className="form-label" htmlFor="password">Password:</label>
-                    <input className="form-input" id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    {!isLogin && (
+                        <div className="form-field">
+                            <label className="form-label" htmlFor="email">Email:</label>
+                            <input className="form-input" id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        </div>
+                    )}
+
+                    <div className="form-field">
+                        <label className="form-label" htmlFor="password">Password:</label>
+                        <input className="form-input" id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    </div>
+
+                    <button type="submit" className="button" data-variant="primary" disabled={loading}>
+                        { loading ? "Caricamento..." : isLogin ? "Accedi" : "Registrati" }
+                    </button>
+                </form>
+
+                <div className="page-actions">
+                    <button type="button" onClick={() => { setIsLogin(!isLogin); setError(''); }} className="button" data-variant="secondary" disabled={loading}>
+                        { isLogin ? "Non hai un account? Registrati!" : "Hai già un account? Accedi" }
+                    </button>
                 </div>
-
-                <button type="submit" className="button" data-variant="primary" disabled={loading}>
-                    { loading ? "Caricamento..." : isLogin ? "Accedi" : "Registrati" }
-                </button>
-            </form>
-
-            <button type="button" onClick={() => { setIsLogin(!isLogin); setError(''); }} className="button" data-variant="secondary" disabled={loading}>
-                { isLogin ? "Non hai un account? Registrati!" : "Hai già un account? Accedi" }
-            </button>
-        </div>
+            </div>
+        </>
     );
 }
