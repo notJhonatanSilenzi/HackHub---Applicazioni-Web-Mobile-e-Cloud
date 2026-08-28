@@ -39,15 +39,6 @@ export default function DashboardView() {
                             </Link>
                         </div>
 
-                        {/* Visualizza Team */}
-                        <div className="card">
-                            <h3 className="card-title">Visualizza Profilo</h3>
-                            <p className="card-text">Consulta i tuoi dati.</p>
-                            <Link to="/profilo" className="button" data-variant="primary">
-                                Profilo
-                            </Link>
-                        </div>
-
                         {/* Crea Hackathon */}
                         <div className="card">
                             <h3 className="card-title">Organizza un Hackathon</h3>
@@ -63,6 +54,15 @@ export default function DashboardView() {
                             <p className="card-text">Seleziona un team e iscrivilo a uno degli hackathon aperti.</p>
                             <Link to="/iscrivi-team" className="button" data-variant="primary">
                                 Iscrivi Team
+                            </Link>
+                        </div>
+
+                        {/* Visualizza Team */}
+                        <div className="card">
+                            <h3 className="card-title">Visualizza Profilo</h3>
+                            <p className="card-text">Consulta i tuoi dati: nome utente, email e team di appartenenza.</p>
+                            <Link to="/profilo" className="button" data-variant="primary">
+                                Profilo
                             </Link>
                         </div>
                     </div>

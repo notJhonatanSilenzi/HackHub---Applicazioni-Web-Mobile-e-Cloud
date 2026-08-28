@@ -4,7 +4,7 @@ url: http://localhost:8081/api/team
 method: POST
 body:
   type: json
-  content: '"nomeTeam"'
+  content: '"Nome Team"'
 auth:
   type: bearer
   credentials:

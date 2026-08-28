@@ -20,55 +20,91 @@
 }
 
 /* ==========================================================================
-   STRUTTURA DELLE VISTE
+   RESET E STRUTTURA DELLE VISTE
    ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--bg-dark);
   color: var(--text-main);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Previene scroll orizzontali indotti da animazioni o popover */
 }
 
 .page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
+}
+
+@media (min-width: 640px) {
+  .page {
+    padding: 24px;
+  }
 }
 
 .page-header {
   width: 100%;
   background-color: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
-  padding: 32px 0;
-  margin-bottom: 32px;
+  padding: 20px 0;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 640px) {
+  .page-header {
+    padding: 32px 0;
+    margin-bottom: 32px;
+  }
 }
 
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   text-align: center;
 }
 
 .page-title {
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 1.75rem;
   color: var(--text-main);
   margin: 0;
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
 }
 
 .section {
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 .page-actions {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   width: 100%;
-  margin-top: 32px;
-  margin-bottom: 40px;
+  margin-top: 24px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 640px) {
+  .page-actions {
+    flex-direction: row;
+    gap: 16px;
+    margin-top: 32px;
+    margin-bottom: 40px;
+  }
 }
 
 .page-actions .button {
@@ -76,132 +112,11 @@ body {
 }
 
 /* ==========================================================================
-   CARD E CONTENUTI
+   BARRA DI NAVIGAZIONE (Responsive Scroll)
    ========================================================================== */
-.card-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;
-}
-
-.card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  transition: var(--transition);
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.2);
-}
-
-.card-title {
-  font-size: 1.25rem;
-  margin-top: 0;
-  color: var(--text-main);
-}
-
-.card-text {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* ==========================================================================
-   FORM ED ELEMENTI DI FORM
-   ========================================================================== */
-.form {
-  background-color: var(--card-bg);
-  padding: 32px;
-  border-radius: var(--radius-md);
-  max-width: 500px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-row {
-  display: flex;
-  gap: 16px;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex: 1;
-  width: 100%;
-}
-
-.form-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-.form-input {
-  background-color: var(--bg-dark);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 12px 16px;
-  border-radius: var(--radius-sm);
-  outline: none;
-  transition: var(--transition);
-}
-
-.form-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-}
-
-.form-input[type="datetime-local"] {
-  color-scheme: dark;
-  background-color: var(--bg-dark);
-  color: var(--text-main);
-}
-
-.form-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  filter: invert(0.8);
-}
-
-/* ==========================================================================
-   ELEMENTI INTERATTIVI
-   ========================================================================== */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 12px 24px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: var(--transition);
-  margin-top: 16px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.button:hover {
-  background-color: var(--primary-hover);
-  transform: translateY(-1px);
-}
-
-.button:active {
-  transform: translateY(0);
-}
-
 .navigation-bar {
   width: 100%;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -213,10 +128,25 @@ body {
 .navigation {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   display: flex;
-  gap: 28px;
+  gap: 16px;
   align-items: center;
+  overflow-x: auto; /* Permette lo scorrimento dei link su dispositivi piccoli */
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Nasconde scrollbar su Firefox */
+}
+
+.navigation::-webkit-scrollbar {
+  display: none; /* Nasconde scrollbar su Chrome/Safari */
+}
+
+@media (min-width: 640px) {
+  .navigation {
+    padding: 0 24px;
+    gap: 28px;
+  }
 }
 
 .navigation-link {
@@ -224,11 +154,19 @@ body {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.95rem;
-  padding: 18px 4px;
+  font-size: 0.9rem;
+  padding: 14px 4px;
   transition: color 0.25s ease, transform 0.15s ease;
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .navigation-link {
+    font-size: 0.95rem;
+    padding: 18px 4px;
+  }
 }
 
 .navigation-link::after {
@@ -246,35 +184,265 @@ body {
 
 .navigation-link:hover {
   color: var(--text-main);
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
 
-.navigation-link:hover::after {
+.navigation-link:hover::after,
+.navigation-link.active::after {
   width: 100%;
   left: 0;
-}
-
-.navigation-link:active {
-  transform: scale(0.95);
-  color: var(--accent);
 }
 
 .navigation-link.active {
   color: var(--accent);
 }
 
-.navigation-link.active::after {
-  width: 100%;
-  left: 0;
+/* ==========================================================================
+   CARD E CONTENUTI
+   ========================================================================== */
+.card-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .card-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: var(--transition);
+}
+
+@media (min-width: 640px) {
+  .card {
+    padding: 24px;
+  }
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.2);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin-top: 0;
+  color: var(--text-main);
+}
+
+.card-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 /* ==========================================================================
-   FEEDBACK E DATI
+   FORM ED ELEMENTI DI FORM
+   ========================================================================== */
+.form {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  width: 100%;
+  max-width: 720px; /* Ampliato per permettere il layout affiancato su desktop */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .form {
+    padding: 32px;
+  }
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    flex-direction: row;
+  }
+  .form-row > .form-field {
+    flex: 1;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column; /* Label in alto, Input sotto */
+  align-items: stretch;
+  gap: 6px;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.form-input {
+  width: 100%;
+  background-color: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: var(--transition);
+  font-size: 16px; /* Previene lo zoom automatico di Safari su iOS */
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Nasconde freccette per input-no-spinners */
+.input-no-spinners::-webkit-outer-spin-button,
+.input-no-spinners::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-no-spinners[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Controlli numerici custom */
+.number-input {
+  position: relative;
+  width: 100%;
+}
+
+.custom-number-input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+  box-sizing: border-box;
+  padding-right: 52px;
+  width: 100%;
+}
+
+.custom-number-input::-webkit-inner-spin-button,
+.custom-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.number-controls {
+  position: absolute;
+  inset: 1px 1px 1px auto;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  width: 42px;
+  overflow: hidden;
+  border-left: 1px solid var(--border-color);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background-color: var(--bg-dark);
+}
+
+.number-control {
+  border: 0;
+  background-color: var(--bg-dark);
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.65rem;
+  line-height: 1;
+  transition: var(--transition);
+}
+
+.number-control + .number-control {
+  border-top: 1px solid var(--border-color);
+}
+
+.number-control:hover {
+  background-color: var(--card-bg);
+  color: var(--primary-hover);
+}
+
+/* ==========================================================================
+   ELEMENTI INTERATTIVI
+   ========================================================================== */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition);
+  width: 100%; /* Larghezza intera su mobile */
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .button {
+    width: auto; /* Dimensione naturale su desktop */
+  }
+}
+
+.button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+/* Varianti Pulsanti */
+.button[data-variant="secondary"] {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+
+.button[data-variant="secondary"]:hover {
+  background-color: var(--border-color);
+}
+
+.button[data-variant="danger"] {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.button[data-variant="danger"]:hover {
+  background-color: #dc2626;
+}
+
+/* ==========================================================================
+   FEEDBACK E TABELLE
    ========================================================================== */
 .badge {
   display: inline-block;
   background-color: var(--accent);
-  color: #000;
+  color: #000000;
   font-weight: bold;
   padding: 4px 10px;
   border-radius: 999px;
@@ -288,25 +456,151 @@ body {
   background-color: var(--card-bg);
   border-left: 4px solid var(--primary);
   margin-bottom: 20px;
+  font-size: 0.95rem;
+  word-break: break-word;
+}
+
+.message[data-kind="error"] {
+  border-left-color: #ef4444;
+  margin: 16px;
+}
+
+.message[data-kind="success"] {
+  border-left-color: var(--accent);
+  margin: 16px;
 }
 
 .table-wrapper {
+  width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24px;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  min-width: 500px; /* Impedisce che le colonne si schiaccino troppo */
 }
 
 .table th, .table td {
-  padding: 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
 }
 
 .detail-row {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+@media (min-width: 640px) {
+  .detail-row {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* ==========================================================================
+   REACT DATEPICKER - ADATTAMENTO RESPONSIVE
+   ========================================================================== */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-md) !important;
+  font-family: inherit !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  font-size: 0.85rem !important;
+  max-width: calc(100vw - 32px) !important;
+}
+
+.react-datepicker__header {
+  background-color: var(--bg-dark) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  border-top-left-radius: var(--radius-md) !important;
+  border-top-right-radius: var(--radius-md) !important;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker__day-name {
+  color: var(--text-main) !important;
+}
+
+.react-datepicker__day {
+  color: var(--text-muted) !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--accent) !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid var(--border-color) !important;
+}
+
+.react-datepicker__time {
+  background-color: var(--card-bg) !important;
+}
+
+.react-datepicker__time-list-item {
+  color: var(--text-muted) !important;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: var(--primary) !important;
+  color: #ffffff !important;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: var(--accent) !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--text-main) !important;
+}
+
+.react-datepicker__time-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.react-datepicker__time-list::-webkit-scrollbar-track {
+  background: var(--bg-dark) !important;
+}
+
+.react-datepicker__time-list::-webkit-scrollbar-thumb {
+  background: var(--border-color) !important;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   FIX AUTOFILL (Suggerimenti di compilazione automatica su Tema Scuro)
+   ========================================================================== */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-transition: background-color 9999s ease-in-out 0s;
+  transition: background-color 9999s ease-in-out 0s;
+  -webkit-text-fill-color: var(--text-main) !important;
+  box-shadow: 0 0 0 1000px var(--bg-dark) inset !important;
 }

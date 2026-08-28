@@ -4,6 +4,8 @@
 
 import React, {type SyntheticEvent, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { DatePicker } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 /**
  * Funzione che ritorna la vista con il form da compilare per la creazione di un hackathon
@@ -24,6 +26,11 @@ export default function CreaHackathonView() {
         scadenzaIscrizioni: "",
         maxIscrizioni: 10
     });
+    // Stati dedicati per i DatePicker (oggetti Date nativi)
+    const [dataInizio, setDataInizio] = useState<Date | null>(null);
+    const [dataFine, setDataFine] = useState<Date | null>(null);
+    const [scadenzaIscrizioni, setScadenzaIscrizioni] = useState<Date | null>(null);
+
     const [loading, setLoading] = useState(false); // Caricamento in corso
     const [error, setError] = useState<string | null>(null); // Eventuale errore
     const [successMessage, setSuccessMessage] = useState<string | null>(null); // Messaggio di successo
@@ -55,9 +62,27 @@ export default function CreaHackathonView() {
         }));
     };
 
+    const changeNumber = (
+        field: "teamMin" | "teamMax" | "maxIscrizioni",
+        variation: number,
+        min: number,
+        max?: number,
+    ) => {
+        setFormData((prev) => {
+            const value = Math.max(min, prev[field] + variation);
+            return { ...prev, [field]: max === undefined ? value : Math.min(max, value) };
+        });
+    };
+
     // Gestione dell'invio dei dati inseriti nel form
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault(); // Prevenzione di race conditions su onClick e onSubmit
+
+        if (!dataInizio || !dataFine || !scadenzaIscrizioni) {
+            setError("Seleziona tutte le date richieste per l'hackathon.");
+            return;
+        }
+
         setLoading(true);
         setError(null);
         setSuccessMessage(null);
@@ -70,6 +95,20 @@ export default function CreaHackathonView() {
             return;
         }
 
+        // Formattazione delle date per Spring Boot
+        const payload = {
+            ...formData,
+            premio: Number(formData.premio),
+            teamMin: Number(formData.teamMin),
+            teamMax: Number(formData.teamMax),
+            maxIscrizioni: Number(formData.maxIscrizioni),
+            dataInizio: dataInizio.toISOString().split("T")[0],
+            dataFine: dataFine.toISOString().split("T")[0],
+            scadenzaIscrizioni: scadenzaIscrizioni.toISOString().slice(0, 19),
+            nomeGiudice: giudice.trim(),
+            nomeMentori: mentori.map((mentore) => mentore.trim()).filter(Boolean),
+        };
+
         try { // Altrimenti effettua la fetch per creare un hackathon
             const response = await fetch("/api/hackathon", {
                 method: "POST",
@@ -78,11 +117,7 @@ export default function CreaHackathonView() {
                     "Accept": "application/json",
                     "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    ...formData,
-                    nomeGiudice: giudice.trim(),
-                    nomeMentori: mentori.map((mentore) => mentore.trim()).filter(Boolean),
-                }),
+                body: JSON.stringify(payload),
             });
             if (!response.ok) { // Fetch non andata a buon fine
                 if (response.status === 403) throw new Error("Non hai i permessi per creare l'hackathon o la sessione è scaduta");
@@ -106,9 +141,6 @@ export default function CreaHackathonView() {
                 </div>
             </header>
             <div className="page">
-                {error && <div className="message" data-kind="error">{error}</div>}
-                {successMessage && <div className="message" data-kind="success">{successMessage}</div>}
-
                 <form onSubmit={handleSubmit} className="form">
                     <div className="form-field">
                         <label className="form-label" htmlFor="nome">Nome Hackathon *</label>
@@ -123,43 +155,61 @@ export default function CreaHackathonView() {
                     <div className="form-row">
                         <div className="form-field">
                             <label className="form-label" htmlFor="dataInizio">Data Inizio *</label>
-                            <input className="form-input" type="datetime" id="dataInizio" name="dataInizio" value={formData.dataInizio} onChange={handleChange} required/>
+                            <DatePicker id="dataInizio" selected={dataInizio} onChange={(date: Date | null) => setDataInizio(date)} dateFormat="dd/MM/yyyy" className="form-input" placeholderText="Seleziona data inizio" selectsStart startDate={dataInizio} endDate={dataFine} required/>
                         </div>
 
                         <div className="form-field">
                             <label className="form-label" htmlFor="dataFine">Data Fine *</label>
-                            <input className="form-input" type="datetime" id="dataFine" name="dataFine" value={formData.dataFine} onChange={handleChange} required/>
+                            <DatePicker id="dataFine" selected={dataFine} onChange={(date: Date | null) => setDataFine(date)} dateFormat="dd/MM/yyyy" className="form-input" placeholderText="Seleziona data fine" selectsEnd startDate={dataInizio} endDate={dataFine} minDate={dataInizio || undefined} required/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-field">
                             <label className="form-label" htmlFor="scadenzaIscrizioni">Scadenza Iscrizioni *</label>
-                            <input className="form-input" type="datetime-local" id="scadenzaIscrizioni" name="scadenzaIscrizioni" value={formData.scadenzaIscrizioni} onChange={handleChange} required/>
+                            <DatePicker id="scadenzaIscrizioni" selected={scadenzaIscrizioni} onChange={(date: Date | null) => setScadenzaIscrizioni(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={15} dateFormat="dd/MM/yyyy HH:mm" className="form-input" placeholderText="Seleziona data e ora" maxDate={dataInizio || undefined} required/>
                         </div>
 
                         <div className="form-field">
                             <label className="form-label" htmlFor="premio">Premio (€)</label>
-                            <input className="form-input" type="number" id="premio" name="premio" min="0" value={formData.premio} onChange={handleChange}/>
+                            <input className="form-input input-no-spinners" type="number" id="premio" name="premio" min="0.01" step="0.01" placeholder="Es. 1000.00" value={formData.premio || ""} onChange={handleChange} required/>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-field">
                             <label className="form-label" htmlFor="teamMin">Membri Minimi per Team *</label>
-                            <input className="form-input" type="number" id="teamMin" name="teamMin" min="1" value={formData.teamMin} onChange={handleChange} required/>
+                            <div className="number-input">
+                                <input className="form-input custom-number-input" type="number" id="teamMin" name="teamMin" min="3" max="6" value={formData.teamMin} onChange={handleChange} required/>
+                                <div className="number-controls">
+                                    <button type="button" className="number-control" aria-label="Aumenta membri minimi" onClick={() => changeNumber("teamMin", 1, 3, 6)}>▲</button>
+                                    <button type="button" className="number-control" aria-label="Diminuisci membri minimi" onClick={() => changeNumber("teamMin", -1, 3, 6)}>▼</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="form-field">
                             <label className="form-label" htmlFor="teamMax">Membri Massimi per Team *</label>
-                            <input className="form-input" type="number" id="teamMax" name="teamMax" min="1" value={formData.teamMax} onChange={handleChange} required/>
+                            <div className="number-input">
+                                <input className="form-input custom-number-input" type="number" id="teamMax" name="teamMax" min="3" max="6" value={formData.teamMax} onChange={handleChange} required/>
+                                <div className="number-controls">
+                                    <button type="button" className="number-control" aria-label="Aumenta membri massimi" onClick={() => changeNumber("teamMax", 1, 3, 6)}>▲</button>
+                                    <button type="button" className="number-control" aria-label="Diminuisci membri massimi" onClick={() => changeNumber("teamMax", -1, 3, 6)}>▼</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div className="form-row">
                         <div className="form-field">
                             <label className="form-label" htmlFor="maxIscrizioni">Numero Massimo Team Iscrivibili *</label>
-                            <input className="form-input" type="number" id="maxIscrizioni" name="maxIscrizioni" min="1" value={formData.maxIscrizioni} onChange={handleChange} required/>
+                            <div className="number-input">
+                                <input className="form-input custom-number-input" type="number" id="maxIscrizioni" name="maxIscrizioni" min="1" value={formData.maxIscrizioni} onChange={handleChange} required/>
+                                <div className="number-controls">
+                                    <button type="button" className="number-control" aria-label="Aumenta numero massimo di iscrizioni" onClick={() => changeNumber("maxIscrizioni", 1, 1)}>▲</button>
+                                    <button type="button" className="number-control" aria-label="Diminuisci numero massimo di iscrizioni" onClick={() => changeNumber("maxIscrizioni", -1, 1)}>▼</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -194,6 +244,8 @@ export default function CreaHackathonView() {
                         {loading ? "Creazione in corso..." : "Crea Hackathon"}
                     </button>
                 </form>
+                {error && <div className="message" data-kind="error">{error}</div>}
+                {successMessage && <div className="message" data-kind="success">{successMessage}</div>}
             </div>
             <div className="page-actions">
                 <Link to="/dashboard" className="button" data-variant="secondary">← Torna alla Dashboard</Link>
