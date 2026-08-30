@@ -18,7 +18,7 @@ export function useHackathons() {
 
         const loadData = async () => {
             try {
-                const data = await fetchHackathons(); // Fetch a GET http://localhost:8081/api/hackathon
+                const data = await fetchHackathons();
                 if (isMounted) setHackathons(data);
             } catch (err: unknown) {
                 if (isMounted) { // Gestione dell'errore

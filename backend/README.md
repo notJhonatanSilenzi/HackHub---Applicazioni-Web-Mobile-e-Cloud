@@ -243,7 +243,7 @@ Il cambio leader del team avviene direttamente tramite `POST /api/team/leader`.
 Registrazione:
 
 ```bash
-curl -X POST http://localhost:8080/api/autenticazione/registrazione \
+curl -X POST http://localhost:8081/api/autenticazione/registrazione \
   -H "Content-Type: application/json" \
   -d '{"nomeUtente":"mario","email":"mario@example.com","password":"Password123!"}'
 ```
@@ -251,7 +251,7 @@ curl -X POST http://localhost:8080/api/autenticazione/registrazione \
 Login:
 
 ```bash
-curl -X POST http://localhost:8080/api/autenticazione/accesso \
+curl -X POST http://localhost:8081/api/autenticazione/accesso \
   -H "Content-Type: application/json" \
   -d '{"nomeUtente":"mario","password":"Password123!"}'
 ```
@@ -259,7 +259,7 @@ curl -X POST http://localhost:8080/api/autenticazione/accesso \
 Creazione team (richiede token):
 
 ```bash
-curl -X POST http://localhost:8080/api/team \
+curl -X POST http://localhost:8081/api/team \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: text/plain" \
   -d 'TeamRocket'
@@ -268,7 +268,7 @@ curl -X POST http://localhost:8080/api/team \
 Valutazione sottomissione (richiede token):
 
 ```bash
-curl -X POST http://localhost:8080/api/sottomissioni/S-123/valutazione \
+curl -X POST http://localhost:8081/api/sottomissioni/S-123/valutazione \
   -H "Authorization: Bearer <token>" \
   -H "Content-Type: application/json" \
   -d '{"giudizio":"Ottimo","punteggio":9}'
