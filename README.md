@@ -67,20 +67,25 @@ Sequenza di passi per la build:
 - docker compose up --build
 
 ### ESEMPIO DI TEMPLATE PER FILE .env
-MYSQL_DATABASE=hackhub [nome del database]
-MYSQL_USER=hackhub [nome utente per accedere al database]
-MYSQL_PASSWORD=change_me [password a scelta]
-MYSQL_ROOT_PASSWORD=change_me [password a scelta, non necessariamente uguale a quella sopra]
+- MYSQL_DATABASE=hackhub [nome DB container MySQL]
+- MYSQL_USER=hackhub [nome utente MySQL app]
+- MYSQL_PASSWORD=change_me [password utente MySQL]
+- MYSQL_ROOT_PASSWORD=change_me [password root a scelta, non necessariamente uguale a quella sopra]
+- MYSQL_PORT=3306 [porta host MySQL, lasciare invariato]
 
-DB_HOST=mysql [host che accede al database]
-DB_PORT=3306 [porta di ascolto, non può essere cambiata]
-DB_NAME=hackhub [nome del database per l'accesso]
-DB_USERNAME=hackhub [nome utente per l'accesso]
-DB_PASSWORD=change_me [password a scelta, uguale a MYSQL_PASSWORD]
+- DB_HOST=mysql [host usato da Spring]
+- DB_PORT=3306 [porta host MySQL, deve restare invariata]
+- DB_NAME=hackhub [nome del database usato da Spring]
+- DB_USERNAME=hackhub [nome utente usato da Spring]
+- DB_PASSWORD=change_me [password a scelta usata da Spring, uguale a MYSQL_PASSWORD]
 
-APP_JWT_SECRET=change_me_with_a_long_random_secret [JWT Secret a scelta, almeno 32 caratteri]
-SERVER_PORT=8081 [porta del backend]
-CORS_ALLOWED_ORIGIN=http://localhost [origine consentita dal CORS]
+- SERVER_PORT=8081 [porta del backend]
+
+- APP_JWT_SECRET=change_me_with_a_long_random_secret [JWT Secret a scelta, almeno 32 caratteri]
+- APP_JWT_EXPIRATION_MS=3600000 [durata di validità del token, qui 1h]
+
+- CORS_ALLOWED_ORIGIN=http://localhost [origine consentita dal CORS]
+
 - Da aggiornare a fine progetto
 
 ## 7) Pipeline CI/CD
