@@ -43,8 +43,10 @@ public class JwtFiltro extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.startsWith("/api/autenticazione/")
-                || (path.startsWith("/api/hackathon") && "GET".equalsIgnoreCase(request.getMethod()));
+        return "OPTIONS".equalsIgnoreCase(request.getMethod())
+                || path.startsWith("/api/autenticazione/")
+                || (path.startsWith("/api/hackathon")
+                && "GET".equalsIgnoreCase(request.getMethod()));
     }
 
     @Override

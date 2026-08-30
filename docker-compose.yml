@@ -19,6 +19,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - hackhub-net
 
   backend:
     build:
@@ -47,6 +49,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - hackhub-net
 
   frontend:
     build:
@@ -59,6 +63,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    networks:
+      - hackhub-net
 
 networks:
   hackhub-net:
