@@ -40,6 +40,8 @@ Studi di Camerino - Corso di Applicazioni Web, Mobile e Cloud.
 - GitHub Actions
 
 ## 4) Architettura
+- Microsoft Azure VM su cui l'applicazione è deployata
+- Docker Compose che orchestra i servizi dell'applicazione e ne gestisce la build e l'avvio tramite i Dockerfile
 - Frontend Vite + React che interagisce col Backend tramite le chiamate HTTP alle
 API REST
 - Backend Java + Spring Boot che risolve le chiamate HTTP e inoltra le risposte al
@@ -52,8 +54,9 @@ Frontend e utilizza il Database, se necessario
 espongono gli endpoint REST per le chiamate HTTP
 - Cartella frontend con le viste e la logica TypeScript
 La build è affidata a docker-compose tramite la definizione dei Dockerfile per Frontend
-e Backend, e il Database vive esclusivamente dentro il container. Tuttavia, il volume
-del container è persistente, e i dati rimangono persistiti ad ogni build del progetto.
+e Backend, e il Database viene eseguito dentro un container Docker, utilizzando un volume persistente per la conservazione
+dei dati.
+- Cartella .github/workflows che contiene il file deploy.yml per la configurazione della pipeline CI/CD
 
 ## 6) Build + Configurazione
 Requisiti:
@@ -73,7 +76,7 @@ Sequenza di passi per la build:
 - MYSQL_ROOT_PASSWORD=change_me [password root a scelta, non necessariamente uguale a quella sopra]
 - MYSQL_PORT=3306 [porta host MySQL, lasciare invariato]
 
-- DB_HOST=mysql [host usato da Spring]
+- DB_HOST=db [host usato da Spring]
 - DB_PORT=3306 [porta host MySQL, deve restare invariata]
 - DB_NAME=hackhub [nome del database usato da Spring]
 - DB_USERNAME=hackhub [nome utente usato da Spring]
@@ -88,12 +91,34 @@ Sequenza di passi per la build:
 
 - Da aggiornare a fine progetto
 
-## 7) Pipeline CI/CD
-- GitHub Actions
-- Da aggiornare a fine progetto
+## 7) Interazione con il frontend
+Il frontend può essere visualizzato in due modalità: in locale oppure su internet, grazie al deployment.
+- Locale: aprire il browser e scrivere "localhost" o "http://localhost"
+- Internet: aprire il browser e inserire il seguente URL: "http://hackhub-example.polandcentral.cloudapp.azure.com"
 
 ## 8) Deployment
-- Da aggiornare a fine progetto
+L'applicazione è stata distribuita su internet tramite il provider Microsoft Azure:
+- VM con sistema operativo Ubuntu Server
+- La VM esegue Docker e Docker Compose, e ospita tutti i servizi dell'applicazione
+- Per ogni aggiornamento dell'applicazione, il deployment passa sempre per la repository GitHub, che si interfaccia
+con la VM Ubuntu di Microsoft Azure
 
-## 9) Autori
+## 9) Pipeline CI/CD
+Il progetto utilizza GitHub Actions per un deployment semplice e automatizzato, come segue:
+- git push
+- GitHub Actions
+- Connessione SSH alla VM Azure
+- git pull
+- docker compose up -d --build
+- applicazione online
+Il workflow viene eseguito ad ogni push sul branch main. Tutte le informazioni sensibili come le credenziali vengono gestite tramite GitHub Actions Secrets.
+
+## 10) Sicurezza
+Tutte le informazioni sensibili non sono pubblicate nella repository GitHub. In particolare:
+- le password del Database e il JWT sono gestite tramite variabili d'ambiente
+- a chiave privata SSH utilizzata dalla pipeline è conservata tramite GitHub Actions Secrets e non è presente nella repository
+- il database non viene esposto pubblicamente tramite i Network Security Group di Azure
+- la porta pubblica utilizzata è la porta 80 (protocollo HTTP)
+
+## 11) Autori
 - Silenzi Jhonatan - Corso di laurea in informatica (L-31) - UNICAM
