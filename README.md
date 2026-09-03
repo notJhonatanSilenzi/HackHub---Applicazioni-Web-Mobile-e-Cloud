@@ -39,6 +39,10 @@ Studi di Camerino - Corso di Applicazioni Web, Mobile e Cloud.
 - Docker Compose
 - GitHub Actions
 
+### Strumenti AI per supporto
+- ChatGPT e Gemini per confronto di possibili alternative di progettazione, funzionalità e deployment, e per correzione degli errori
+- GitHub Copilot per scrittura del codice automatizzata in riga, per uno sviluppo più rapido
+
 ## 4) Architettura
 - Microsoft Azure VM su cui l'applicazione è deployata
 - Docker Compose che orchestra i servizi dell'applicazione e ne gestisce la build e l'avvio tramite i Dockerfile
